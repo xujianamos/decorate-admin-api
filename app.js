@@ -3,9 +3,15 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
-
+// 导入路由
 var indexRouter = require('./routes/index')
-var usersRouter = require('./routes/admin')
+var orderRouter = require('./routes/order')
+var eventRouter = require('./routes/event')
+var cateRouter = require('./routes/cate')
+var caseRouter = require('./routes/case')
+var articleRouter = require('./routes/article')
+var companyRouter = require('./routes/company')
+var adminRouter = require('./routes/admin')
 
 var app = express()
 
@@ -20,7 +26,13 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
+app.use('/order', orderRouter)
+app.use('/event', eventRouter)
+app.use('/cate', cateRouter)
+app.use('/case', caseRouter)
+app.use('/article', articleRouter)
+app.use('/company', companyRouter)
+app.use('/admin', adminRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
