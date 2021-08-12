@@ -3,6 +3,8 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
+// 引入中间件
+const verifyMiddleware = require('./routes/middleware/verify')
 // 导入路由
 var indexRouter = require('./routes/index')
 var orderRouter = require('./routes/order')
@@ -25,14 +27,15 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+// 使用路由
 app.use('/', indexRouter)
-app.use('/order', orderRouter)
-app.use('/event', eventRouter)
-app.use('/cate', cateRouter)
-app.use('/case', caseRouter)
-app.use('/article', articleRouter)
-app.use('/company', companyRouter)
-app.use('/admin', adminRouter)
+app.use('/order', verifyMiddleware.verifyToken, orderRouter)
+app.use('/event', verifyMiddleware.verifyToken, eventRouter)
+app.use('/cate', verifyMiddleware.verifyToken, cateRouter)
+app.use('/case', verifyMiddleware.verifyToken, caseRouter)
+app.use('/article', verifyMiddleware.verifyToken, articleRouter)
+app.use('/company', verifyMiddleware.verifyToken, companyRouter)
+app.use('/admin', verifyMiddleware.verifyToken, adminRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
