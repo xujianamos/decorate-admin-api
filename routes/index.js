@@ -11,6 +11,8 @@ const express = require('express')
 const router = express.Router()
 // 引入multer模块
 const multer = require('multer')
+// 引入token中间件
+const verifyMiddleware = require('./middleware/verify')
 // 创建文件上传中间件
 const uploadMiddleware = multer()
 // 引入自定义的controller
@@ -22,5 +24,5 @@ router.get('/', function (req, res, next) {
 // 定义登录路由，post请求
 router.post('/login', IndexController.login)
 // 定义上传图片路由，post请求
-router.post('/upload', uploadMiddleware.single('img'), IndexController.upload)
+router.post('/upload', verifyMiddleware.verifyToken, uploadMiddleware.single('img'), IndexController.upload)
 module.exports = router
