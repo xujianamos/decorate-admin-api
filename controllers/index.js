@@ -103,4 +103,43 @@ function login(req, res) {
   Common.autoFn(tasks, res, resObj)
 }
 // 上传图片方法
-function upload(req, res) {}
+function upload(req, res) {
+  const resObj = Common.clone(Constant.DEFAULT_SUCCESS)
+  let tasks = {
+    checkParams: cb => {
+      Common.checkParams(req.file, ['originalname'], cb)
+    },
+    save: [
+      'checkParams',
+      (results, cb) => {
+        // 获取上传文件的文件名
+        let lastIndex = req.file.originalname.lastIndexOf('.')
+        let extension = req.file.originalname.substr(lastIndex - 1)
+        //  使用时间戳作为新文件名
+        let fileName = new Date().getTime() + extension
+        /*
+         * 保存文件
+         * 3个参数
+         * 1.图片的绝对路径
+         * 2.写入的内容
+         * 3.回调函数
+         * */
+        fs.writeFile(path.join(__dirname, '../public/upload/' + fileName), req.file.buffer, err => {
+          //  保存出错
+          if (err) {
+            cb(Constant.SAVE_FILE_ERROR)
+          } else {
+            resObj.data = {
+              // 返回文件名
+              fileName: fileName,
+              // 通过公共方法getImgUrl拼接图片路径
+              path: Common.getImgUrl(req, fileName)
+            }
+            cb(null)
+          }
+        })
+      }
+    ]
+  }
+  Common.autoFn(tasks, res, resObj)
+}
