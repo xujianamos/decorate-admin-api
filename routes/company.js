@@ -11,7 +11,7 @@ const router = express.Router()
 // 引入自定义controller
 const CompanyController = require('../controllers/company')
 // 定义获取企业信息路由
-router.get('/', CompanyController.list)
+router.get('/', CompanyController.info)
 // 定义修改企业信息路由
 router.put('/', CompanyController.update)
 module.exports = router
