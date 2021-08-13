@@ -14,4 +14,4 @@ const OrderController = require('../controllers/order')
 router.get('/', OrderController.list)
 // 定义修改预约状态路由
 router.put('/status', OrderController.updateStatus)
-module.exports = router()
+module.exports = router
