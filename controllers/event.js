@@ -21,7 +21,7 @@ const exportObj = {
 module.exports = exportObj
 // 获取活动列表
 function list(req, res) {
-  const resObj = Common.clone(Constants.DEFAULT_SUCCESS)
+  const resObj = Common.clone(Constant.DEFAULT_SUCCESS)
   let tasks = {
     checkParams: cb => {
       // 如果传入了dropList参数，代表需要下拉列表，跳过分页
