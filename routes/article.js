@@ -20,4 +20,4 @@ router.post('/', ArticleController.add)
 router.put('/', ArticleController.update)
 // 定义删除文章路由
 router.delete('/', ArticleController.remove)
-module.exports = router()
+module.exports = router
