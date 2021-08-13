@@ -7,7 +7,7 @@
  * @FilePath     : \decorate-admin-api\models\event.js
  */
 const Sequelize = require('sequelize')
-const ArticleModel = require('./models/article')
+const ArticleModel = require('./article')
 const db = require('../db')
 // 定义model
 const Event = db.define(
